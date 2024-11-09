@@ -50,8 +50,12 @@ proc LuaInit*(L : PState) {.cdecl,exportc,dynlib.} =
     L.register("nim",regs)
     L.pop(1)
 ```
-2-  Build the nim code : 
-to build the nim code to be used in defld run : 
+2-  Build the nim code :  
+to build the nim code to be used in defld  :  
+*   Left click mouse on `MyExtension.nim` in `assests` you will see build editor script .  
+ **OR** 
+*   run from shell  
+
 ```bash
 python BuildExt.py 
 ```
