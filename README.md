@@ -3,6 +3,11 @@ Nim Naitive Extension for defold
 
 # Creedits : 
 ***this work is based on the nice project [nimLua](https://github.com/jangko/nimLUA)***
+## Install 
+### game.project -> project -> dependecies -> add this url 
+```txt
+https://github.com/MhadhbiXissam/dfnim/archive/refs/tags/v1.0.1.zip
+```
 # Get starts : 
 1-  Edit file `MyExtension.nim`
 ```txt
