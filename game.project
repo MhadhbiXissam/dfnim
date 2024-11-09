@@ -10,7 +10,7 @@ height = 640
 
 [project]
 title = Nim Defold Native Extension
-dependencies#0 = https://github.com/MhadhbiXissam/dfnim/archive/refs/tags/v1.0.0.zip
+dependencies = 
 
 [library]
 include_dirs = Nim
