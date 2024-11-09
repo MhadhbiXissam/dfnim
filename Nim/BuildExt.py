@@ -1,4 +1,4 @@
-import os , shutil , subprocess , urllib.request , glob
+import os , shutil , subprocess , urllib.request , glob , sys 
 joinpath = os.path.join 
 
 def BuildExt(cpp_code) : 
@@ -10,7 +10,11 @@ def BuildExt(cpp_code) :
     # get currnet nim installation : 
     nimpath = shutil.which('nim')
     if nimpath is None : 
-        exit("[Exit Error] nim is not installed or can not be found ")
+        may_exisits = os.path.join(os.environ['HOME'] , '.nimble/bin/nim')
+        if os.path.exists(may_exisits) : 
+            nimpath = may_exisits
+        else : 
+            exit("[Defold Nim Naitive Extension] Erro: nim is not installed or can not be found ")
     nim_version = subprocess.run([
         nimpath , "-v"
     ] , capture_output=True, text=True)
@@ -18,6 +22,7 @@ def BuildExt(cpp_code) :
         exit(f'[Exit Error] can not excute command : {nimpath} -v , due to {nim_version.stderr}' )
     # get nimbase.h content  
     nimversion = nim_version.stdout.split()[nim_version.stdout.split().index('Version') + 1 ]
+    print(f"[Defold Nim Naitive Extension]: Nim version: {nimversion}")
     rtawgithub_nimbase_h = f'https://raw.githubusercontent.com/nim-lang/Nim/refs/tags/v{nimversion}/lib/nimbase.h'
     nimbase_h_content = None 
     try:
@@ -25,7 +30,7 @@ def BuildExt(cpp_code) :
             content = response.read().decode('utf-8')  # Decode if it's text content
             nimbase_h_content = content
     except urllib.error.URLError as e:
-        exit(f"Failed to retrieve content: {e.reason}")
+        exit(f"[Defold Nim Naitive Extension] Error: Failed to retrieve content: {e.reason}")
     ## clean old build 
     if os.path.exists(nimcache) : 
         shutil.rmtree(nimcache)
@@ -34,22 +39,24 @@ def BuildExt(cpp_code) :
         nimpath , "c" , "--exceptions:quirky" , "-d:release"  , "--genScript " , "--gc:refc" ,"-d:useMalloc" , "--noMain" , "--app:lib",
         f"--nimcache:{nimcache}"  , f"--header:{cheader}" , nimfile
     ]
-    print(f" Build :\n\t {' '.join(nim_compîle_command)}")
+    print(f"[Defold Nim Naitive Extension] Executing :\n{' '.join(nim_compîle_command)}")
     nim_compile = subprocess.run(
             nim_compîle_command  , capture_output=True, text=True
     )
     if nim_compile.returncode != 0 : 
-        exit(f'[Error] compiling {nimfile} \n' + nim_compile.stderr)
+        exit(f'[Defold Nim Naitive Extension] Error: compiling {nimfile} \n' + nim_compile.stderr)
     if not os.path.exists(os.path.join(nimcache,"nimbase.h")) : 
         print(nimbase_h_content , file = open(os.path.join(nimcache,"nimbase.h"),"w"))
     os.makedirs(ExtensionPath , exist_ok = True ) 
     # copy src files
     ExtensionPath_src = os.path.join(ExtensionPath,'src')
+    if os.path.exists(ExtensionPath_src) : shutil.rmtree(ExtensionPath_src)
     os.makedirs(ExtensionPath_src , exist_ok = True )
     for file in glob.glob(os.path.join(nimcache , "*.c")) : 
         shutil.copy(file , os.path.join(ExtensionPath_src,os.path.basename(file)))
     # copy header files
     ExtensionPath_include = os.path.join(ExtensionPath,'include')
+    if os.path.exists(ExtensionPath_include) : shutil.rmtree(ExtensionPath_include)
     os.makedirs(ExtensionPath_include , exist_ok = True )  
     for file in glob.glob(os.path.join(nimcache , "*.h")) : 
         shutil.copy(file , os.path.join(ExtensionPath_include,os.path.basename(file)))
@@ -60,6 +67,7 @@ def BuildExt(cpp_code) :
         print('name: "nim"\n' , file = open(os.path.join(ExtensionPath,"ext.manifest"),"w"))
     if os.path.exists(nimcache) : 
         shutil.rmtree(nimcache)
+    print("[Defold Nim Naitive Extension] Extension ready !!")
 
 
 cpp_code  = '''
@@ -136,4 +144,9 @@ static void OnEventMyExtension(dmExtension::Params* params, const dmExtension::E
 // It must match the name field in the `ext.manifest`
 DM_DECLARE_EXTENSION(nim, LIB_NAME, AppInitializeMyExtension, AppFinalizeMyExtension, InitializeMyExtension, OnUpdateMyExtension, OnEventMyExtension, FinalizeMyExtension)
 '''
-BuildExt(cpp_code=cpp_code)
+
+
+
+if __name__ == "__main__" : 
+    if len(sys.argv) == 1 : 
+        BuildExt(cpp_code=cpp_code)
