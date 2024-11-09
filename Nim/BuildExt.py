@@ -56,8 +56,8 @@ def BuildExt(cpp_code) :
     if not os.path.exists(os.path.join(ExtensionPath_src,"nim.cpp")) : 
         print(cpp_code , file = open(os.path.join(ExtensionPath_src,"nim.cpp"),"w"))
     # create manifest file
-    if not os.path.exists(os.path.join(ExtensionPath,"nim.manifest")) : 
-        print('name: "ext"\n' , file = open(os.path.join(ExtensionPath,"nim.manifest"),"w"))
+    if not os.path.exists(os.path.join(ExtensionPath,"ext.manifest")) : 
+        print('name: "nim"\n' , file = open(os.path.join(ExtensionPath,"ext.manifest"),"w"))
     if os.path.exists(nimcache) : 
         shutil.rmtree(nimcache)
 

@@ -6,7 +6,7 @@ Nim Naitive Extension for defold
 # Get starts : 
 1-  Edit file `MyExtension.nim`
 ```txt
-.
+Nim
 ├── BuildExt.py     <-- this to build the nim code 
 ├── LICENSE
 ├── Lua.nim         <-- this is Lua binding for nim 
