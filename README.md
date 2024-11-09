@@ -47,7 +47,7 @@ proc LuaInit*(L : PState) {.cdecl,exportc,dynlib.} =
         luaL_Reg(name: "add", `func`: Luabinding_add),
         luaL_Reg(name: nil, `func`: nil)
     ]
-    L.register("ext",regs)
+    L.register("nim",regs)
     L.pop(1)
 ```
 2-  Build the nim code : 
