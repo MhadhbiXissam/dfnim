@@ -69,8 +69,9 @@ python BuildExt.py
 3- Use you function from  any where in your lua defold scipts : 
 ```lua
     --- ....
-	local result = nim.add(10,12)
-	print(result) 
+    local result = nim.add(10,12)
+    print(result) 
     --- ....
 end
 ```
+

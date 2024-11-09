@@ -8,7 +8,7 @@ Nim Naitive Extension for defold
 ### game.project -> project -> dependecies -> add this url 
 
 ```txt
-https://github.com/MhadhbiXissam/dfnim/archive/refs/tags/v1.0.1.zip
+https://github.com/MhadhbiXissam/dfnim/archive/refs/tags/v1.0.6.zip
 ```
 # Get starts : 
 # Create Extension : 
@@ -69,8 +69,8 @@ python BuildExt.py
 3- Use you function from  any where in your lua defold scipts : 
 ```lua
     --- ....
-	local result = nim.add(10,12)
-	print(result) 
+    local result = nim.add(10,12)
+    print(result) 
     --- ....
 end
 ```
