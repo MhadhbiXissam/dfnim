@@ -13,5 +13,5 @@ title = Nim Defold Native Extension
 dependencies = 
 
 [library]
-include_dirs = Nim
+include_dirs = NimExtension
 
