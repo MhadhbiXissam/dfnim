@@ -8,7 +8,7 @@ Nim Naitive Extension for defold
 ### game.project -> project -> dependecies -> add this url 
 
 ```txt
-https://github.com/MhadhbiXissam/dfnim/archive/refs/tags/v1.0.1.zip
+https://github.com/MhadhbiXissam/dfnim/archive/refs/tags/v1.0.6.zip
 ```
 # Get starts : 
 # Create Extension : 

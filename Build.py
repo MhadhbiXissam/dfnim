@@ -17,3 +17,4 @@ generated_code = Template_Editor_script.replace('BUILD_EXTENSION_CODE_BUILD_EXTE
 generated_code = generated_code.replace('MyExtensionMyExtensionMyExtensionMyExtensionMyExtensionMyExtensionMyExtensionMyExtension' , MyExtension)
 generated_code = generated_code.replace('Lua_binding_codeLua_binding_codeLua_binding_codeLua_binding_codeLua_binding_codeLua_binding_code' , Luacode)
 print(generated_code,file = open(os.path.join(NimExtension ,"Nim.editor_script"),"w"))
+print(open('README.md').read() ,file = open(os.path.join(NimExtension ,"'README.md"),"w"))
